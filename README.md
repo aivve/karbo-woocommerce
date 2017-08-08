@@ -1,8 +1,8 @@
 # Karbo for WooCommerce
 
-Karbo for WooCommerce is a Wordpress plugin that allows merchants to accept KRB at WooCommerce-powered online stores.
+Karbo for WooCommerce is a Wordpress plugin that allows merchants to accept KRB at WooCommerce-powered online stores. This version is designed to work with https://karbo.club Payment Gateway.
 
-Contributors: KittyCatTech, gesman
+Contributors: KittyCatTech, gesman, aivve
 
 Tags: karbo, karbo wordpress plugin, karbo plugin, karbo payments, accept karbo, karbos
 
@@ -38,18 +38,17 @@ Once you have installed and activated WooCommerce, you may install and activate 
 
 ## Installation 
 
-
 1.  Install WooCommerce plugin and configure your store (if you haven't done so already - http://wordpress.org/plugins/woocommerce/).
 2.  Install "Karbo for WooCommerce" wordpress plugin just like any other Wordpress plugin.
 3.  Activate.
-4.  Download and install on your computer Karbo wallet program from: https://karbo.org/
-5.  Copy and setup your wallet on the server. Change permission to executable. Run karbod as a service.
-6.  Generate Container (optionally reset containter to view only container and add view only address). Run walletd as a service.
-7.  Get your wallet address from walletd.
+4.  Create wallet at https://karbo.club 
+5.  Save your generated wallet in safe place.  
+6.  Import your generated wallet into Karbo wallet software, which you can download from http://karbowanec.com to be able to use karbos you will receive to that address.
+7.  Copy your wallet address.
 8.  Within your site's Wordpress admin, navigate to:
 	    WooCommerce -> Settings -> Checkout -> Karbo
 	    and paste your wallet address into "Wallet Address" field.
-9.  Select "Karbo service provider" = "Local Wallet" and fill-in other settings at Karbo management panel.
+9.  Select "Karbo service provider" = "Karbo Club FREE Gateway" and fill-in other settings at Karbo management panel.
 10. Press [Save changes]
 11. If you do not see any errors - your store is ready for operation and to access payments in Karbos!
 
