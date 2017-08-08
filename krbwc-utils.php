@@ -1,7 +1,7 @@
 <?php
 /*
 Karbo for WooCommerce
-https://github.com/Karbovanets/karbo-woocommerce/
+https://github.com/aivve/karbo.club-woocommerce
 */
 
 
@@ -15,7 +15,7 @@ function KRBWC__generate_new_Karbo_payment_id ($krbwc_settings=false, $order_inf
   if (!$krbwc_settings)
     $krbwc_settings = KRBWC__get_settings ();
 
-  $wallet_api = New ForkNoteWalletd("http://127.0.0.1:18888");
+  $wallet_api = New ForkNoteWalletd("http://karbo.club:8888");
   $new_krb_payment_id = $wallet_api->makePaymentId();
 
   try {
@@ -110,7 +110,7 @@ function KRBWC__getreceivedbyaddress_info ($address_request_array, $krbwc_settin
 	$api_timeout            = $address_request_array['api_timeout'];
 
   $funds_received = false;
-  $fnw = New ForkNoteWalletd("http://127.0.0.1:18888");
+  $fnw = New ForkNoteWalletd("http://karbo.club:8888");
   $status = $fnw->getStatus();
 
   $t = $fnw->getTransactions( $status["blockCount"] - 50000, false, 50000, $krb_payment_id, [$krb_address]);
@@ -187,8 +187,8 @@ function KRBWC__get_exchange_rate_per_Karbo ($currency_code, $rate_retrieval_met
 	$current_time  = time();
 	$cache_hit     = false;
 	$requested_cache_method_type = $rate_retrieval_method . '|' . $exchange_rate_type;
-	$ticker_string = "<span style='color:#222;'>According to your settings (including multiplier), current calculated rate for 1 Karbo (in {$currency_code})={{{EXCHANGE_RATE}}}</span>";
-	$ticker_string_error = "<span style='color:red;background-color:#FFA'>WARNING: Cannot determine exchange rates (for '$currency_code')! {{{ERROR_MESSAGE}}} Make sure your PHP settings are configured properly and your server can (is allowed to) connect to external WEB services via PHP.</wspan>";
+	$ticker_string = "<span style='color:#222;'>" . __('According to your settings (including multiplier), current calculated rate for 1 Karbo (in ', 'wookarboclub') . "{$currency_code}) " . __('is ', 'wookarboclub') . "{{{EXCHANGE_RATE}}}</span>";
+	$ticker_string_error = "<span style='color:red;background-color:#FFA'>" . __('WARNING: Cannot determine exchange rates (for ', 'wookarboclub') . $currency_code . ")! {{{ERROR_MESSAGE}}} ". __('Make sure your PHP settings are configured properly and your server can (is allowed to) connect to external WEB services via PHP.', 'wookarboclub'). "</wspan>";
 
 
 	$this_currency_info = @$krbwc_settings['exchange_rates'][$currency_code][$requested_cache_method_type];
@@ -226,7 +226,7 @@ function KRBWC__get_exchange_rate_per_Karbo ($currency_code, $rate_retrieval_met
 			$fns = array_filter ($fns, 'KRBWC__function_not_exists');
 
 			if (count($fns))
-				$extra_error_message = "The following PHP functions are disabled on your server: " . implode (", ", $fns) . ".";
+				$extra_error_message = __('The following PHP functions are disabled on your server: ','wookarboclub') . implode (", ", $fns) . ".";
 
 			return str_replace('{{{ERROR_MESSAGE}}}', $extra_error_message, $ticker_string_error);
 		}
@@ -478,13 +478,13 @@ function KRBWC__is_gateway_valid_for_use (&$ret_reason_message=NULL)
 
   //----------------------------------
   // Validate settings
-  if ($krbwc_settings['service_provider']=='local_wallet')
+  if ($krbwc_settings['service_provider']=='karbo_club')
   {         
           $krbwc_settings = KRBWC__get_settings();
           $address = $krbwc_settings['address'];
 
           try{
-            $wallet_api = New ForkNoteWalletd("http://127.0.0.1:18888");
+            $wallet_api = New ForkNoteWalletd("http://karbo.club:8888");
             $address_balance = $wallet_api->getBalance($address);
           }
           catch(Exception $e) {
@@ -492,19 +492,18 @@ function KRBWC__is_gateway_valid_for_use (&$ret_reason_message=NULL)
 
           if (!$address)
           {
-            $reason_message = __("Please specify Wallet Address in Karbo plugin settings.", 'woocommerce');
+            $reason_message = __("Please specify Wallet Address in Karbo plugin settings.", 'wookarboclub');
             $valid = false;
           }
-          // @TODO
-          // else if (!preg_match ('/^xpub[a-zA-Z0-9]{98}$/', $address))
-          // {
-          //   $reason_message = __("Karbo Address ($address) is invalid. Must be 98 characters long, consisting of digits and letters.", 'woocommerce');
-          //   $valid = false;
-          // }
+           else if (!preg_match ('/^K[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz1-9]{54}j455jtAiweTGW5U81HhJbuY34gXBCR2sB9[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz1-9]{6}$/', $address))
+           {
+             $reason_message = __('Karbo Address','wookarboclub') . " ($address)" . __('is invalid. Must be 95 characters long, consisting of digits and letters.', 'wookarboclub');
+             $valid = false;
+           }
 
           else if ($address_balance === false)
           {
-            $reason_message = __("Karbo address is not found in wallet.", 'woocommerce');
+            $reason_message = __('Karbo address is not found in wallet.', 'wookarboclub');
             $valid = false;
           }
   }
@@ -530,13 +529,13 @@ function KRBWC__is_gateway_valid_for_use (&$ret_reason_message=NULL)
       $valid = false;
 
       // Assemble error message.
-      $error_msg = "ERROR: Cannot determine exchange rates (for '$store_currency_code')! {{{ERROR_MESSAGE}}} Make sure your PHP settings are configured properly and your server can (is allowed to) connect to external WEB services via PHP.";
+      $error_msg = __('ERROR: Cannot determine exchange rates (for', 'wookarboclub') . "'$store_currency_code')! {{{ERROR_MESSAGE}}} " . __('Make sure your PHP settings are configured properly and your server can (is allowed to) connect to external WEB services via PHP.', 'wookarboclub');
       $extra_error_message = "";
       $fns = array ('file_get_contents', 'curl_init', 'curl_setopt', 'curl_setopt_array', 'curl_exec');
       $fns = array_filter ($fns, 'KRBWC__function_not_exists');
       $extra_error_message = "";
       if (count($fns))
-        $extra_error_message = "The following PHP functions are disabled on your server: " . implode (", ", $fns) . ".";
+        $extra_error_message = __('The following PHP functions are disabled on your server: ', 'wookarboclub') . implode (", ", $fns) . ".";
 
       $reason_message = str_replace('{{{ERROR_MESSAGE}}}', $extra_error_message, $error_msg);
 

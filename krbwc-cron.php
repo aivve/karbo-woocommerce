@@ -1,7 +1,7 @@
 <?php
 /*
 Karbo for WooCommerce
-https://github.com/Karbovanets/karbo-woocommerce/
+https://github.com/aivve/karbo.club-woocommerce
 */
 
 
@@ -110,6 +110,9 @@ function KRBWC_cron_job_worker ($hardcron=false)
           }
         }
 
+        // Note: to be perfectly safe against late-paid orders, we need to:
+        //	Scan '$address_meta['orders']' for first UNPAID order that is exactly matching amount at address.
+
 		    if ($balance_info_array['balance'] >= $last_order_info['order_total'])
 		    {
 		      // Process full payment event
@@ -171,7 +174,7 @@ function KRBWC_cron_job_worker ($hardcron=false)
 		}
 	}
 
-	// Process all late payments here and calculate the new exchange rate.
+	// Process all 'revalidate' addresses here.
 	// ...
 
   // // SELECT the 5 most recent assigned but expired orders to check for late payments

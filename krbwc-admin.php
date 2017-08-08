@@ -1,7 +1,7 @@
 <?php
 /*
 Karbo for WooCommerce
-https://github.com/Karbovanets/karbo-woocommerce/
+https://github.com/aivve/karbo.club-woocommerce
 */
 
 // Include everything
@@ -24,22 +24,45 @@ global $g_KRBWC__config_defaults;
 $g_KRBWC__config_defaults = array (
 
    // ------- Hidden constants
+// 'supported_currencies_arr'             =>  array ('USD', 'AUD', 'CAD', 'CHF', 'CNY', 'DKK', 'EUR', 'GBP', 'HKD', 'JPY', 'NZD', 'PLN', 'RUB', 'SEK', 'SGD', 'THB'), // Not used right now.
+// 'database_schema_version'              =>  1.4,
    'assigned_address_expires_in_mins'     =>  12*60,   // 12 hours to pay for order and receive necessary number of confirmations.
    'funds_received_value_expires_in_mins' =>  '5',		// 'received_funds_checked_at' is fresh (considered to be a valid value) if it was last checked within 'funds_received_value_expires_in_mins' minutes.
+// 'starting_index_for_new_krb_payments' =>  '2',    // Generate new addresses for the wallet starting from this index.
+// 'max_blockchains_api_failures'         =>  '3',    // Return error after this number of sequential failed attempts to retrieve blockchain data.
+// 'max_unusable_generated_addresses'     =>  '20',   // Return error after this number of unusable (non-empty) Karbo addresses were sequentially generated
    'blockchain_api_timeout_secs'          =>  '20',   // Connection and request timeouts for curl operations dealing with blockchain requests.
    'exchange_rate_api_timeout_secs'       =>  '10',   // Connection and request timeouts for curl operations dealing with exchange rate API requests.
    'soft_cron_job_schedule_name'          =>  'minutes_1',   // WP cron job frequency
+// 'delete_expired_unpaid_orders'         =>  '1',   // Automatically delete expired, unpaid orders from WooCommerce->Orders database
+// 'reuse_expired_addresses'              =>  '1',   // True - may reduce anonymouty of store customers (someone may click/generate bunch of fake orders to list many addresses that in a future will be used by real customers).
+                                                      // False - better anonymouty but may leave many addresses in wallet unused (and hence will require very high 'gap limit') due to many unpaid order clicks.
+                                                      //        In this case it is recommended to regenerate new wallet after 'gap limit' reaches 1000.
+// 'max_unused_addresses_buffer'          =>  10,     // Do not pre-generate more than these number of unused addresses. Pregeneration is done only by hard cron job or manually at plugin settings.
    'cache_exchange_rates_for_minutes'			=>	10,			// Cache exchange rate for that number of minutes without re-calling exchange rate API's.
+// 'soft_cron_max_loops_per_run'					=>	2,			// NOT USED. Check up to this number of assigned Karbo addresses per soft cron run. Each loop involves number of DB queries as well as API query to blockchain - and this may slow down the site.
+// 'elists'																=>	array(),
+// 'use_aggregated_api'										=>  '1',		// Use aggregated API to efficiently retrieve Karbo address balance
 
    // ------- General Settings
-   'service_provider'				 						  =>  'local_wallet',		// 'blockchain_info'
+// 'license_key'                          =>  'UNLICENSED',
+// 'api_key'                              =>  substr(md5(microtime()), -16),
+   // New, ported from WooCommerce settings pages.
+   'service_provider'				 	  =>  'karbo_club',		// 'blockchain_info'
    'address'                              =>  '', 
+   // 'electrum_mpk_saved'                   =>  '', // Saved, non-normalized value - MPK's separated by space / \n / ,
+   // 'electrum_mpks'                        =>  array(), // Normalized array of MPK's - derived from saved.
    'confs_num'                            =>  '4', // number of confirmations required before accepting payment.
+   //'exchange_rate_type'                   =>  'vwap', // 'realtime', 'bestrate'.
    'exchange_multiplier'                  =>  '1.00',
 
    'delete_db_tables_on_uninstall'        =>  '0',
-   'autocomplete_paid_orders'							=>  '1',
+   'autocomplete_paid_orders'			  =>  '1',
    'enable_soft_cron_job'                 =>  '1',    // Enable "soft" Wordpress-driven cron jobs.
+
+   // ------- Copy of $this->settings of 'KRBWC_Karbo' class.
+   // DEPRECATED (only blockchain.info related settings still remain there.)
+// 'gateway_settings'                     =>  array('confirmations' => 6),
 
    // ------- Special settings
    'exchange_rates'                       =>  array('EUR' => array('method|type' => array('time-last-checked' => 0, 'exchange_rate' => 1), 'GBP' => array())),
@@ -47,17 +70,17 @@ $g_KRBWC__config_defaults = array (
 //===========================================================================
 
 //===========================================================================
-function KRBWC__GetPluginNameVersionEdition($please_donate = false) // false to turn off
+function KRBWC__GetPluginNameVersionEdition($please_donate = true) // false to turn off
 {
   $return_data = '<h2 style="border-bottom:1px solid #DDD;padding-bottom:10px;margin-bottom:20px;">' .
-            KRBWC_PLUGIN_NAME . ', version: <span style="color:#EE0000;">' .
+            KRBWC_PLUGIN_NAME . ', v.: <span style="color:#EE0000;">' .
             KRBWC_VERSION. '</span>' .
           '</h2>';
 
 
   if ($please_donate)
   {
-    $return_data .= '<p style="border:1px solid #890e4e;padding:5px 10px;color:#004400;background-color:#FFF;"><u>Please donate KRB to</u>:&nbsp;&nbsp;<span style="color:#d21577;font-size:110%;font-weight:bold;"></span></p>';
+    $return_data .= "<p style='border:1px solid #890e4e;padding:5px 10px;color:#004400;background-color:#FFF;'>" . __('Please donate KRB to:','wookarboclub') . "&nbsp;&nbsp;<span style='font-size:110%;font-weight:bold;'><a href='karbowanec:KdueH7qJgwWGwzUCNxiUnkG4ddayULf9PMAnGgEHyVeMbAfzYP4BPSJj455jtAiweTGW5U81HhJbuY34gXBCR2sB9YcE3h9'>KdueH7qJgwWGwzUCNxiUnkG4ddayULf9PMAnGgEHyVeMbAfzYP4BPSJj455jtAiweTGW5U81HhJbuY34gXBCR2sB9YcE3h9</a></span>" . __(' to support maintaining of the free Payment Gateway.','wookarboclub') . "</p>";
   }
 
   return $return_data;
@@ -71,7 +94,7 @@ function KRBWC__withdraw ()
     $address = $krbwc_settings['address'];
 
     try{
-      $wallet_api = New ForkNoteWalletd("http://127.0.0.1:18888");
+      $wallet_api = New ForkNoteWalletd("http://karbo.club:8888");
       $address_balance = $wallet_api->getBalance($address);
     }
     catch(Exception $e) {
@@ -79,7 +102,7 @@ function KRBWC__withdraw ()
 
     if ($address_balance === false)
     {
-      return "Karbo address is not found in wallet.";
+      return __('Karbo address is not found in wallet.','wookarboclub');
     } else {
       $address_balance = $address_balance['availableBalance'];
       //round ( float $val [, int $precision = 0 [, int $mode = PHP_ROUND_HALF_UP ]] )
@@ -146,6 +169,23 @@ function KRBWC__update_settings ($krbwc_use_these_settings=false, $also_update_p
          }
       // If not in POST - existing will be used.
       }
+
+   //---------------------------------------
+   // Validation
+   //if ($krbwc_settings['aff_payout_percents3'] > 90)
+   //   $krbwc_settings['aff_payout_percents3'] = "90";
+   //---------------------------------------
+
+  // ---------------------------------------
+  // Post-process variables.
+
+  // Array of MPK's. Single MPK = element with idx=0
+  //$krbwc_settings['electrum_mpks'] = preg_split("/[\s,]+/", $krbwc_settings['electrum_mpk_saved']);
+  // ---------------------------------------
+
+
+  // if ($also_update_persistent_settings)
+  //   KRBWC__update_persistent_settings ($krbwc_settings);
 
   update_option (KRBWC_SETTINGS_NAME, $krbwc_settings);
 }
@@ -248,6 +288,8 @@ function KRBWC__create_database_tables ($krbwc_settings)
   $krbwc_settings = KRBWC__get_settings();
   $must_update_settings = false;
 
+  ///$persistent_settings_table_name       = $wpdb->prefix . 'krbwc_persistent_settings';
+  ///$karbo_clubs_table_name          = $wpdb->prefix . 'krbwc_karbo_clubs';
   $krb_payments_table_name             = $wpdb->prefix . 'krbwc_krb_payments';
 
   if($wpdb->get_var("SHOW TABLES LIKE '$krb_payments_table_name'") != $krb_payments_table_name)
@@ -257,6 +299,22 @@ function KRBWC__create_database_tables ($krbwc_settings)
 
  //----------------------------------------------------------
  // Create tables
+  /// NOT NEEDED YET
+  /// $query = "CREATE TABLE IF NOT EXISTS `$persistent_settings_table_name` (
+  ///   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  ///   `settings` text,
+  ///   PRIMARY KEY  (`id`)
+  ///   );";
+  /// $wpdb->query ($query);
+
+  /// $query = "CREATE TABLE IF NOT EXISTS `$karbo_clubs_table_name` (
+  ///   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  ///   `master_public_key` varchar(255) NOT NULL,
+  ///   PRIMARY KEY  (`id`),
+  ///   UNIQUE KEY  `master_public_key` (`master_public_key`)
+  ///   );";
+  /// $wpdb->query ($query);
+
   $query = "CREATE TABLE IF NOT EXISTS `$krb_payments_table_name` (
     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     `krb_address` char(98) NOT NULL,
@@ -276,7 +334,84 @@ function KRBWC__create_database_tables ($krbwc_settings)
     KEY `status` (`status`)
     );";
   $wpdb->query ($query);
- //----------------------------------------------------------
+  //----------------------------------------------------------
+
+	// upgrade krbwc_krb_payments table, add additional indexes
+  // if (!$b_first_time)
+  // {
+  //   $version = floatval($krbwc_settings['database_schema_version']);
+
+  //   if ($version < 1.1)
+  //   {
+
+  //     $query = "ALTER TABLE `$krb_payments_table_name` ADD INDEX `origin_id` (`origin_id` ASC) , ADD INDEX `status` (`status` ASC)";
+  //     $wpdb->query ($query);
+  //     $krbwc_settings['database_schema_version'] = 1.1;
+  //     $must_update_settings = true;
+  //   }
+
+  //   if ($version < 1.2)
+  //   {
+
+  //     $query = "ALTER TABLE `$krb_payments_table_name` DROP INDEX `index_in_wallet`, ADD INDEX `index_in_wallet` (`index_in_wallet` ASC)";
+  //     $wpdb->query ($query);
+  //     $krbwc_settings['database_schema_version'] = 1.2;
+  //     $must_update_settings = true;
+  //   }
+
+  //   if ($version < 1.3)
+  //   {
+
+  //     $query = "ALTER TABLE `$krb_payments_table_name` CHANGE COLUMN `origin_id` `origin_id` char(128)";
+  //     $wpdb->query ($query);
+  //     $krbwc_settings['database_schema_version'] = 1.3;
+  //     $must_update_settings = true;
+
+  //     $address = @$krbwc_settings['gateway_settings']['electrum_master_public_key'];
+  //     if ($address)
+  //     {
+  //       // Replace hashed values of MPK in DB with real MPK values.
+  //       $address_old_value = 'electrum.mpk.' . md5($address);
+  //       // UPDATE table_name SET field = REPLACE(field, 'foo', 'bar') WHERE INSTR(field, 'foo') > 0;
+  //       // UPDATE [table_name] SET [field_name] = REPLACE([field_name], "foo", "bar");
+  //       $query = "UPDATE `$krb_payments_table_name` SET `origin_id` = '$address' WHERE `origin_id` = '$address_old_value'";
+  //       $wpdb->query ($query);
+
+  //       // Copy settings from old location to new, if new is empty.
+  //       if (!@$krbwc_settings['electrum_mpk_saved'])
+  //       {
+  //         $krbwc_settings['electrum_mpk_saved'] = $address;
+  //         // 'KRBWC__update_settings()' will populate $krbwc_settings['electrum_mpks'].
+  //       }
+  //     }
+  //   }
+
+  //   if ($version < 1.4)
+  //   {
+
+  //     $query = "ALTER TABLE `$krb_payments_table_name` MODIFY `address_meta` MEDIUMBLOB";
+  //     $wpdb->query ($query);
+  //     $krbwc_settings['database_schema_version'] = 1.4;
+  //     $must_update_settings = true;
+  //   }
+
+  // }
+
+ //  if ($must_update_settings)
+ //  {
+	//   KRBWC__update_settings ($krbwc_settings);
+	// }
+
+  //----------------------------------------------------------
+  // Seed DB tables with initial set of data
+  /* PERSISTENT SETTINGS CURRENTLY UNUNSED
+  if ($b_first_time || !is_array(KRBWC__get_persistent_settings()))
+  {
+    // Wipes table and then creates first record and populate it with defaults
+    KRBWC__reset_all_persistent_settings();
+  }
+  */
+   //----------------------------------------------------------
 }
 //===========================================================================
 
@@ -286,8 +421,12 @@ function KRBWC__delete_database_tables ()
 {
   global $wpdb;
 
+  ///$persistent_settings_table_name       = $wpdb->prefix . 'krbwc_persistent_settings';
+  ///$karbo_clubs_table_name          = $wpdb->prefix . 'krbwc_karbo_clubs';
   $krb_payments_table_name    = $wpdb->prefix . 'krbwc_krb_payments';
 
+  ///$wpdb->query("DROP TABLE IF EXISTS `$persistent_settings_table_name`");
+  ///$wpdb->query("DROP TABLE IF EXISTS `$karbo_clubs_table_name`");
   $wpdb->query("DROP TABLE IF EXISTS `$krb_payments_table_name`");
 }
 //===========================================================================

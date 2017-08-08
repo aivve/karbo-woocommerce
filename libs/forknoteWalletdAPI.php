@@ -383,6 +383,8 @@ class ForkNoteWalletd {
 	//       ]
 	//    }
 	// }
+	// @TODO Test with all possible types of inputs
+	// address array test
    public function getTransactionHashes( $firstBlockIndex=false, $firstblockHash=false, $blockCount, $paymentId=false, $addresses=false ) {
       $args = array();
       $args["jsonrpc"] = "2.0";
@@ -475,6 +477,7 @@ class ForkNoteWalletd {
 	//      ]
 	//   }
 	// }
+	// @TODO Test
    public function getTransactions( $firstBlockIndex=false, $firstblockHash=false, $blockCount, $paymentId=false, $addresses=false ) {
       $args = array();
       $args["jsonrpc"] = "2.0";
@@ -519,6 +522,7 @@ class ForkNoteWalletd {
 	//      ]
 	//   }
 	// }
+	// @TODO Test
    public function getUnconfirmedTransactionHashes( $addresses=false ) {
       $args = array();
       $args["jsonrpc"] = "2.0";
@@ -576,6 +580,7 @@ class ForkNoteWalletd {
 	//      }
 	//   }
 	// }
+	// @TODO Test
    public function getTransaction( $transactionHash ) {
       $args = array();
       $args["jsonrpc"] = "2.0";
@@ -628,6 +633,7 @@ class ForkNoteWalletd {
 	//      'transactionHash':'93faedc8b8a80a084a02dfeffd163934746c2163f23a1b6022b32423ec9ae08f'
 	//   }
 	// }
+	// @TODO Test
    public function sendTransaction( $fromAddresses=false, $transfers, $paymentId=false, $anonymity=6, $fee=1000000, $changeAddress=false, $unlockTime=false, $extra=false ) {
       $args = array();
       $args["jsonrpc"] = "2.0";
@@ -645,6 +651,14 @@ class ForkNoteWalletd {
       if ($result)
          return $result['result'];
    }
+
+	// createDelayedTransaction	createDelayedTransaction() method creates but not sends a transaction.
+	// getDelayedTransactionHashes	getDelayedTransactionHashes() method returns hashes of delayed transactions.
+	// deleteDelayedTransaction	deleteDelayedTransaction() method deletes a specified delayed transaction.
+	// sendDelayedTransaction	sendDelayedTransaction() method sends a specified delayed transaction.
+	// sendFusionTransaction	sendFusionTransaction() method creates and sends a fusion transaction.
+	// estimateFusion	estimateFusion() method allows to estimate a number of outputs that can be optimized with fusion transactions.
+	
 
 	public function makePaymentId() {
 		return bin2hex(openssl_random_pseudo_bytes(32));

@@ -1,9 +1,8 @@
 <?php
 /*
 Karbo for WooCommerce
-https://github.com/Karbovanets/karbo-woocommerce/
+https://github.com/aivve/karbo.club-woocommerce
 */
-
 
 //---------------------------------------------------------------------------
 add_action('plugins_loaded', 'KRBWC__plugins_loaded__load_Karbo_gateway', 0);
@@ -42,10 +41,10 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 	     */
 		public function __construct()
 		{
-			$this->id				= 'Karbo';
+			$this->id				= 'krb_karbo_club';
 			$this->icon 			= plugins_url('/images/krb_buyitnow_32x.png', __FILE__);	// 32 pixels high
 			$this->has_fields 		= false;
-			$this->method_title     = __( 'Karbo', 'woocommerce' );
+			$this->method_title     = __( 'Karbo Club Gateway', 'wookarboclub' );
 
 			// Load KRBWC settings.
 			$krbwc_settings = KRBWC__get_settings ();
@@ -62,8 +61,8 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 			$this->confs_num = $krbwc_settings['confs_num'];  //$this->settings['confirmations'];
 			$this->description 	= $this->settings['description'];	// Short description about the gateway which is shown on checkout.
 			$this->instructions = $this->settings['instructions'];	// Detailed payment instructions for the buyer.
-			$this->instructions_multi_payment_str  = __('You may send payments from multiple accounts to reach the total required.', 'woocommerce');
-			$this->instructions_single_payment_str = __('You must pay in a single payment in full.', 'woocommerce');
+			$this->instructions_multi_payment_str  = __('You may send payments from multiple accounts to reach the total required.', 'wookarboclub');
+			$this->instructions_single_payment_str = __('You must pay in a single payment in full.', 'wookarboclub');
 
 			// Actions
 			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '>=' ) )
@@ -96,28 +95,28 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 	    	// Validate settings
 	    	if (!$this->service_provider)
 	    	{
-	    		$reason_message = __("Karbo Service Provider is not selected", 'woocommerce');
+	    		$reason_message = __("Karbo Service Provider is not selected", 'wookarboclub');
 	    		$valid = false;
 	    	}
 	    	
-	    	else if ($this->service_provider=='local_wallet')
+	    	else if ($this->service_provider=='karbo_club')
 	    	{
-	    		$wallet_api = New ForkNoteWalletd("http://127.0.0.1:18888");
+	    		$wallet_api = New ForkNoteWalletd("http://karbo.club:8888");
 	    		$krbwc_settings = KRBWC__get_settings();
           		$address = $krbwc_settings['address'];
 	    		if (!$address)
 	    		{
-		    		$reason_message = __("Please specify Wallet Address in Karbo plugin settings.", 'woocommerce');
+		    		$reason_message = __("Please specify Wallet Address in Karbo plugin settings.", 'wookarboclub');
 		    		$valid = false;
 		    	}
-	    		// else if (!preg_match ('/^xpub[a-zA-Z0-9]{98}$/', $address))
-	    		// {
-		    	// 	$reason_message = __("Karbo Address ($address) is invalid. Must be 98 characters long, consisting of digits and letters.", 'woocommerce');
-		    	// 	$valid = false;
-		    	// }
+	    		 else if (!preg_match ('/^K[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz1-9]{54}j455jtAiweTGW5U81HhJbuY34gXBCR2sB9[ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz1-9]{6}$/', $address))
+	    		 {
+		    	 	$reason_message = __('Karbo Address','wookarboclub'). "($address)". __('is invalid. Must be 95 characters long, consisting of digits and letters. You have to register at Karbo.club to get the address.', 'wookarboclub');
+		    	 	$valid = false;
+		    	 }
 		    	else if ($wallet_api->getBalance($address) === false)
 		    	{
-		    		$reason_message = __("Karbo address is not found in wallet.", 'woocommerce');
+		    		$reason_message = __("Karbo address is not found in wallet.", 'wookarboclub');
 		    		$valid = false;
 		    	}
 	    	}
@@ -187,59 +186,72 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 
 				$currency_ticker = KRBWC__get_exchange_rate_per_Karbo ($currency_code, 'getfirst', true);
 	    	//-----------------------------------
-
+			
 	    	//-----------------------------------
 	    	// Payment instructions
 	    	$payment_instructions = '
+<div class="payment_details">
 <table class="krbwc-payment-instructions-table" id="krbwc-payment-instructions-table">
   <tr class="bpit-table-row">
-    <td colspan="2">' . __('Please send your Karbo payment as follows:', 'woocommerce') . '</td>
+    <td colspan="3">' . __('Please send your Karbo payment as follows:', 'wookarboclub') . '</td>
+  </tr>
+  <tr>
+	<td rowspan="5">
+	    <img src="http://karbo.club/qr/?address={{{KRBCOINS_ADDRESS}}}&amount={{{KRBCOINS_AMOUNT}}}&payment_id={{{KRBCOINS_PAYMENTID}}}" alt="Scan QR Code" />
+	</td>
   </tr>
   <tr class="bpit-table-row">
     <td style="vertical-align:middle;" class="bpit-td-name bpit-td-name-amount">
-      ' . __('Amount', 'woocommerce') . ' (<strong>KRB</strong>):
+      ' . __('Amount', 'wookarboclub') . '&nbsp;(<strong>KRB</strong>):
     </td>
     <td class="bpit-td-value bpit-td-value-amount">
-      <div style="border:1px solid #FCCA09;padding:2px 6px;margin:2px;background-color:#FCF8E3;border-radius:4px;color:#CC0000;font-weight: bold;font-size: 120%;">
+      <div style="color:#CC0000;font-weight: bold;font-size: 120%;">
       	{{{KRBCOINS_AMOUNT}}}
       </div>
     </td>
   </tr>
     <tr class="bpit-table-row">
     <td style="vertical-align:middle;" class="bpit-td-name bpit-td-name-krbaddr">
-      ' . __('Payment ID:', 'woocommerce') . '
+      ' . __('Payment ID:', 'wookarboclub') . '
     </td>
     <td class="bpit-td-value bpit-td-value-krbaddr">
-      <div style="border:1px solid #FCCA09;padding:2px 6px;margin:2px;background-color:#FCF8E3;border-radius:4px;color:#555;font-weight: bold;font-size: 120%;">
+      <div style="word-break: break-all;color:#555;font-weight: bold;font-size: 120%;">
         {{{KRBCOINS_PAYMENTID}}}
       </div>
     </td>
   </tr>
   <tr class="bpit-table-row">
     <td style="vertical-align:middle;" class="bpit-td-name bpit-td-name-krbaddr">
-      ' . __('Address:', 'woocommerce') . '
+      ' . __('Address:', 'wookarboclub') . '
     </td>
     <td class="bpit-td-value bpit-td-value-krbaddr">
-      <div style="border:1px solid #FCCA09;padding:2px 6px;margin:2px;background-color:#FCF8E3;border-radius:4px;color:#555;font-weight: bold;font-size: 120%;">
+      <div style="word-break: break-all;color:#555;font-weight: bold;font-size: 120%;">
         {{{KRBCOINS_ADDRESS}}}
       </div>
     </td>
   </tr>
+  <tr class="bpit-table-row">
+	<td colspan="3">
+	<a id="pay" href="karbowanec:{{{KRBCOINS_ADDRESS}}}?amount={{{KRBCOINS_AMOUNT}}}&amp;payment_id={{{KRBCOINS_PAYMENTID}}}" class="button">  ' . __('Open in wallet', 'wookarboclub') . ' </a>
+	</td>
+  </tr>
 </table>
 
-' . __('Please note:', 'woocommerce') . '
+' . __('Please note:', 'wookarboclub') . '
 <ol class="bpit-instructions">
-    <li>' . __('You must make a payment within 1 hour, or your order will be cancelled', 'woocommerce') . '</li>
-    <li>' . __('As soon as your payment is received in full you will receive email confirmation with order delivery details.', 'woocommerce') . '</li>
+    <li>' . __('You must make a payment within 1 hour, or your order will be cancelled', 'wookarboclub') . '</li>
+    <li>' . __('As soon as your payment is received in full you will receive email confirmation with order delivery details.', 'wookarboclub') . '</li>
     <li>{{{EXTRA_INSTRUCTIONS}}}</li>
 </ol>
+</div>
 ';
+
 
 			$payment_instructions = trim ($payment_instructions);
 
 	    	$payment_instructions_description = '
 						  <p class="description" style="width:50%;float:left;width:49%;">
-					    	' . __( 'Specific instructions given to the customer to complete Karbos payment.<br />You may change it, but make sure these tags will be present: <b>{{{KRBCOINS_AMOUNT}}}</b>, <b>{{{KRBCOINS_PAYMENTID}}}</b>, <b>{{{KRBCOINS_ADDRESS}}}</b> and <b>{{{EXTRA_INSTRUCTIONS}}}</b> as these tags will be replaced with customer - specific payment details.', 'woocommerce' ) . '
+					    	' . __( 'Specific instructions given to the customer to complete Karbos payment.<br />You may change it, but make sure these tags will be present: <b>{{{KRBCOINS_AMOUNT}}}</b>, <b>{{{KRBCOINS_PAYMENTID}}}</b>, <b>{{{KRBCOINS_ADDRESS}}}</b> and <b>{{{EXTRA_INSTRUCTIONS}}}</b> as these tags will be replaced with customer - specific payment details.', 'wookarboclub' ) . '
 						  </p>
 						  <p class="description" style="width:50%;float:left;width:49%;">
 					    	Payment Instructions, original template (for reference):<br />
@@ -251,35 +263,35 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 
 	    	$this->form_fields = array(
 				'enabled' => array(
-								'title' => __( 'Enable/Disable', 'woocommerce' ),
+								'title' => __( 'Enable/Disable', 'wookarboclub' ),
 								'type' => 'checkbox',
-								'label' => __( 'Enable Karbo', 'woocommerce' ),
+								'label' => __( 'Enable Karbo', 'wookarboclub' ),
 								'default' => 'yes'
 							),
 				'title' => array(
-								'title' => __( 'Title', 'woocommerce' ),
+								'title' => __( 'Title', 'wookarboclub' ),
 								'type' => 'text',
-								'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
-								'default' => __( 'Karbo Payment', 'woocommerce' )
+								'description' => __( 'This controls the title which the user sees during checkout.', 'wookarboclub' ),
+								'default' => __( 'Karbo Payment', 'wookarboclub' )
 							),
 
 				'Karbo_addr_merchant' => array(
-								'title' => __( 'Karbo Address', 'woocommerce' ),
+								'title' => __( 'Karbo Address', 'wookarboclub' ),
 								'type' => 'text',
 								'css'     => '',
 								'disabled' => false,
-								'description' => __( 'Your Karbo address where customer sends you payment for the product. It must be in your walletd container.', 'woocommerce' ),
+								'description' => __( 'Your Karbo address where customer sends you payment for the product. It must be received at Karbo.club.', 'wookarboclub' ),
 								'default' => '',
 							),
 
 				'description' => array(
-								'title' => __( 'Customer Message', 'woocommerce' ),
+								'title' => __( 'Customer Message', 'wookarboclub' ),
 								'type' => 'text',
-								'description' => __( 'Initial instructions for the customer at checkout screen', 'woocommerce' ),
-								'default' => __( 'Please proceed to the next screen to see necessary payment details.', 'woocommerce' )
+								'description' => __( 'Initial instructions for the customer at checkout screen', 'wookarboclub' ),
+								'default' => __( 'Please proceed to the next screen to see necessary payment details.', 'wookarboclub' )
 							),
 				'instructions' => array(
-								'title' => __( 'Payment Instructions (HTML)', 'woocommerce' ),
+								'title' => __( 'Payment Instructions (HTML)', 'wookarboclub' ),
 								'type' => 'textarea',
 								'description' => $payment_instructions_description,
 								'default' => $payment_instructions,
@@ -302,16 +314,16 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 
 			// After defining the options, we need to display them too; thats where this next function comes into play:
 	    	?>
-	    	<h3><?php _e('Karbo Payment', 'woocommerce'); ?></h3>
+	    	<h3><?php _e('Karbo Payment', 'wookarboclub'); ?></h3>
 	    	<p>
 	    		<?php _e('Allows WooCommerce to accept payments in Karbo.',
-	    				'woocommerce'); ?>
+	    				'wookarboclub'); ?>
 	    	</p>
 	    	<?php
 	    		echo $store_valid ? ('<p style="border:1px solid #DDD;padding:5px 10px;font-weight:bold;color:#004400;background-color:#CCFFCC;">' .
-            __('Karbo payment gateway is operational','woocommerce') .
+            __('Karbo payment gateway is operational','wookarboclub') .
             '</p>') : ('<p style="border:1px solid #DDD;padding:5px 10px;font-weight:bold;color:#EE0000;background-color:#FFFFAA;">' .
-            __('Karbo payment gateway is not operational (try to re-enter and save Karbo Plugin settings): ','woocommerce') . $validation_msg . '</p>');
+            __('Karbo payment gateway is not operational (try to re-enter and save Karbo Plugin settings): ','wookarboclub') . $validation_msg . '</p>');
 	    	?>
 	    	<table class="form-table">
 	    	<?php
@@ -369,8 +381,8 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 			/// $exchange_rate = KRBWC__get_exchange_rate_per_Karbo (get_woocommerce_currency(), $this->exchange_rate_retrieval_method, $this->exchange_rate_type);
 			if (!$exchange_rate)
 			{
-				$msg = 'ERROR: Cannot determine Karbo exchange rate. Possible issues: store server does not allow outgoing connections, exchange rate servers are blocking incoming connections or down. ' .
-					   'You may avoid that by setting store currency directly to Karbo(KRB)';
+				$msg = __('ERROR: Cannot determine Karbo exchange rate. Possible issues: store server does not allow outgoing connections, exchange rate servers are blocking incoming connections or down. ','wookarboclub') .
+					   __('You may avoid that by setting store currency directly to Karbo (KRB)', 'wookarboclub');
       			KRBWC__log_event (__FILE__, __LINE__, $msg);
       			exit ('<h2 style="color:red;">' . $msg . '</h2>');
 			}
@@ -398,7 +410,7 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
   		$ret_info_array = array();
 
 
-               $wallet_api = New ForkNoteWalletd("http://127.0.0.1:18888");
+               $wallet_api = New ForkNoteWalletd("http://karbo.club:8888");
 
                $karbo_payment_id = KRBWC__generate_new_Karbo_payment_id($krbwc_settings, $order_info);
 
@@ -455,7 +467,7 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 			//	Updating the order status:
 
 			// Mark as on-hold (we're awaiting for Karbos payment to arrive)
-			$order->update_status('on-hold', __('Awaiting Karbo payment to arrive', 'woocommerce'));
+			$order->update_status('on-hold', __('Awaiting Karbo payment to arrive', 'wookarboclub'));
 
 /*
 			///////////////////////////////////////
@@ -628,7 +640,7 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 	//=======================================================================
 	function KRBWC__add_krb_currency($currencies)
 	{
-	     $currencies['KRB'] = __( 'Karbo', 'woocommerce' );
+	     $currencies['KRB'] = __( 'Karbo', 'wookarboclub' );
 	     return $currencies;
 	}
 	//=======================================================================
@@ -639,7 +651,7 @@ function KRBWC__plugins_loaded__load_Karbo_gateway ()
 		switch( $currency )
 		{
 			case 'KRB':
-				$currency_symbol = '$KRB'; // ฿
+				$currency_symbol = 'Ҝ'; // Ҝ or &#1180;
 				break;
 		}
 
@@ -670,7 +682,7 @@ function KRBWC__process_payment_completed_for_order ($order_id, $Karbos_paid=fal
 
 		// Instantiate order object.
 		$order = new WC_Order($order_id);
-		$order->add_order_note( __('Order paid in full', 'woocommerce') );
+		$order->add_order_note( __('Order paid in full', 'wookarboclub') );
 
 	  $order->payment_complete();
 
@@ -678,7 +690,7 @@ function KRBWC__process_payment_completed_for_order ($order_id, $Karbos_paid=fal
 		if ($krbwc_settings['autocomplete_paid_orders'])
 		{
   		// Ensure order is completed.
-			$order->update_status('completed', __('Order marked as completed according to Karbo plugin settings', 'woocommerce'));
+			$order->update_status('completed', __('Order marked as completed according to Karbo plugin settings', 'wookarboclub'));
 		}
 
 		// Notify admin about payment processed
@@ -688,8 +700,8 @@ function KRBWC__process_payment_completed_for_order ($order_id, $Karbos_paid=fal
 		if ($email)
 		{
 			// Send email from admin to admin
-			KRBWC__send_email ($email, $email, "Full payment received for order ID: '{$order_id}'",
-				"Order ID: '{$order_id}' paid in full. <br />Received KRB: '$Karbos_paid'.<br />Please process and complete order for customer."
+			KRBWC__send_email ($email, $email, __('Full payment received for order ID: ', 'wookarboclub') . "'{$order_id}'",
+				__('Order ID: ', 'wookarboclub') . "'{$order_id}'" . __('paid in full.', 'wookarboclub') . "<br />" . __('Received KRB: ', 'wookarboclub') . "'$Karbos_paid'.<br />" . __('Please process and complete order for customer. ', 'wookarboclub') . ""
 				);
 		}
 	}

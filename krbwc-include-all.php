@@ -1,7 +1,7 @@
 <?php
 /*
 Karbo for WooCommerce
-https://github.com/Karbovanets/karbo-woocommerce/
+https://github.com/aivve/karbo.club-woocommerce
 */
 
 //---------------------------------------------------------------------------
@@ -15,11 +15,11 @@ if (!defined('KRBWC_PLUGIN_NAME'))
 
   //-----------------------------------------------
   define('KRBWC_SETTINGS_NAME',     'KRBWC-Settings');
-  define('KRBWC_PLUGIN_NAME',       'Karbo for WooCommerce');   
+  define('KRBWC_PLUGIN_NAME',       __('Karbo for WooCommerce','wookarboclub'));   
 
 
   // i18n plugin domain for language files
-  define('KRBWC_I18N_DOMAIN',       'krbwc');
+  define('KRBWC_I18N_DOMAIN',       'wookarboclub');
 
   }
 //---------------------------------------------------------------------------

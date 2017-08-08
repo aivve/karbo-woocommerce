@@ -1,0 +1,576 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Karbo Club WooCommerce\n"
+"POT-Creation-Date: 2017-08-07 12:44+0300\n"
+"PO-Revision-Date: 2017-08-08 00:45+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: krbwc-admin.php:83
+msgid "Please donate KRB to:"
+msgstr "Зробіть пожертву KRB на адресу:"
+
+#: krbwc-admin.php:83
+msgid " to support maintaining of the free Payment Gateway."
+msgstr " для підтримки існування безкоштовного шлюзу."
+
+#: krbwc-admin.php:105 krbwc-karbo-gateway.php:119 krbwc-render-settings.php:80
+#: krbwc-utils.php:506
+msgid "Karbo address is not found in wallet."
+msgstr "Адреса не знайдена в гаманці."
+
+#: krbwc-include-all.php:18
+msgid "Karbo for WooCommerce"
+msgstr "Карбованець для WooCommerce"
+
+#: krbwc-karbo-gateway.php:47
+msgid "Karbo Club Gateway"
+msgstr "Платіжний шлюз Карбо Клуб"
+
+#: krbwc-karbo-gateway.php:64
+msgid ""
+"You may send payments from multiple accounts to reach the total required."
+msgstr ""
+"Ви можете висилати платежі з різних рахунків поки не назбирається потрібна "
+"сума."
+
+#: krbwc-karbo-gateway.php:65
+msgid "You must pay in a single payment in full."
+msgstr "Ви мусите зробити оплату однією транзакцією."
+
+#: krbwc-karbo-gateway.php:98
+msgid "Karbo Service Provider is not selected"
+msgstr "Сервіс провайдер оплати карбованцями не вибрано"
+
+#: krbwc-karbo-gateway.php:109 krbwc-utils.php:495
+msgid "Please specify Wallet Address in Karbo plugin settings."
+msgstr "Вкажіть адресу карбованців у налаштуваннях плагіну."
+
+#: krbwc-karbo-gateway.php:114 krbwc-karbo-gateway.php:279 krbwc-utils.php:500
+msgid "Karbo Address"
+msgstr "Адреса карбованців"
+
+#: krbwc-karbo-gateway.php:114
+msgid ""
+"is invalid. Must be 95 characters long, consisting of digits and letters. "
+"You have to register at Karbo.club to get the address."
+msgstr ""
+"неправильна. Вона має складатися з 95 символів. Ви повинні зареєстуватись і "
+"отримати адресу на Karbo.club."
+
+#: krbwc-karbo-gateway.php:196
+msgid "Please send your Karbo payment as follows:"
+msgstr "Будь ласка, надішліть свій платіж карбованцями таким чином:"
+
+#: krbwc-karbo-gateway.php:205
+msgid "Amount"
+msgstr "Сума"
+
+#: krbwc-karbo-gateway.php:215
+msgid "Payment ID:"
+msgstr "Ідентифікатор платежу:"
+
+#: krbwc-karbo-gateway.php:225
+msgid "Address:"
+msgstr "Адреса:"
+
+#: krbwc-karbo-gateway.php:235
+msgid "Open in wallet"
+msgstr "Відкрити у гаманці"
+
+#: krbwc-karbo-gateway.php:240
+msgid "Please note:"
+msgstr "Майте на увазі:"
+
+#: krbwc-karbo-gateway.php:242
+msgid "You must make a payment within 1 hour, or your order will be cancelled"
+msgstr ""
+"Необхідно здійснити оплату на протязі години, або замовлення буде скасовано"
+
+#: krbwc-karbo-gateway.php:243
+msgid ""
+"As soon as your payment is received in full you will receive email "
+"confirmation with order delivery details."
+msgstr ""
+"Як тільки платіж буде отримано, вам надійде повідомлення з підтвердженням і "
+"деталями."
+
+#: krbwc-karbo-gateway.php:254
+msgid ""
+"Specific instructions given to the customer to complete Karbos payment.<br /"
+">You may change it, but make sure these tags will be present: "
+"<b>{{{KRBCOINS_AMOUNT}}}</b>, <b>{{{KRBCOINS_PAYMENTID}}}</b>, "
+"<b>{{{KRBCOINS_ADDRESS}}}</b> and <b>{{{EXTRA_INSTRUCTIONS}}}</b> as these "
+"tags will be replaced with customer - specific payment details."
+msgstr ""
+"Спеціальні вказівки, надані клієнту для завершення платежу карбованцями.<br /"
+">Їх можна змінити, але вказівки мають містити ці теги: "
+"<b>{{{KRBCOINS_AMOUNT}}}</b>, <b>{{{KRBCOINS_PAYMENTID}}}</b>, "
+"<b>{{{KRBCOINS_ADDRESS}}}</b> and <b>{{{EXTRA_INSTRUCTIONS}}}</b> так як "
+"замість них будуть підставлені реквізити конкретного платежу."
+
+#: krbwc-karbo-gateway.php:266
+msgid "Enable/Disable"
+msgstr "Увімкнути/Вимкнути"
+
+#: krbwc-karbo-gateway.php:268
+msgid "Enable Karbo"
+msgstr "Увімунути Карбо"
+
+#: krbwc-karbo-gateway.php:272
+msgid "Title"
+msgstr "Назва"
+
+#: krbwc-karbo-gateway.php:274
+msgid "This controls the title which the user sees during checkout."
+msgstr "Назва, яка показується на сторінці оплати."
+
+#: krbwc-karbo-gateway.php:275 krbwc-karbo-gateway.php:317
+msgid "Karbo Payment"
+msgstr "Оплата карбованцями"
+
+#: krbwc-karbo-gateway.php:283
+msgid ""
+"Your Karbo address where customer sends you payment for the product. It must "
+"be received at Karbo.club."
+msgstr ""
+"Адреса на яку надходитиме оплата за товари. Ви отримаєте її при реєстрації "
+"на Karbo.club."
+
+#: krbwc-karbo-gateway.php:288
+msgid "Customer Message"
+msgstr "Повідомлення покупцю"
+
+#: krbwc-karbo-gateway.php:290
+msgid "Initial instructions for the customer at checkout screen"
+msgstr "Початкові інструкції для покупця на сторінці оплати"
+
+#: krbwc-karbo-gateway.php:291
+msgid "Please proceed to the next screen to see necessary payment details."
+msgstr "Перейдіть на наступну сторінку щоб отримати деталі для оплати."
+
+#: krbwc-karbo-gateway.php:294
+msgid "Payment Instructions (HTML)"
+msgstr "Інструкція по оплаті (HTML)"
+
+#: krbwc-karbo-gateway.php:319
+msgid "Allows WooCommerce to accept payments in Karbo."
+msgstr ""
+"За допомогою цього плагіна у WooCommerce можна приймати оплату в карбованцях."
+
+#: krbwc-karbo-gateway.php:324
+msgid "Karbo payment gateway is operational"
+msgstr "Шлюз Карбо працює"
+
+#: krbwc-karbo-gateway.php:326
+msgid ""
+"Karbo payment gateway is not operational (try to re-enter and save Karbo "
+"Plugin settings): "
+msgstr ""
+"Шлюз Карбо не працює (спробуйте ще раз ввести і зберегти налаштування):"
+
+#: krbwc-karbo-gateway.php:384
+msgid ""
+"ERROR: Cannot determine Karbo exchange rate. Possible issues: store server "
+"does not allow outgoing connections, exchange rate servers are blocking "
+"incoming connections or down. "
+msgstr ""
+"ПОМИЛКА: Не вдалось визначити курс обміну карбованців. Можливі причини: "
+"сервер магазину не дозволяє вихідні з’єднання, сервер курсів блокує вхідні "
+"з’єднання або недоступний."
+
+#: krbwc-karbo-gateway.php:385
+msgid "You may avoid that by setting store currency directly to Karbo (KRB)"
+msgstr ""
+"Цього можна уникнути якщо встановити Карбованець як основнку валюту магазину."
+
+#: krbwc-karbo-gateway.php:470
+msgid "Awaiting Karbo payment to arrive"
+msgstr "Очікування оплати карбованцями"
+
+#: krbwc-karbo-gateway.php:643
+msgid "Karbo"
+msgstr "Карбованець"
+
+#: krbwc-karbo-gateway.php:685
+msgid "Order paid in full"
+msgstr "Замовлення повністю оплачене."
+
+#: krbwc-karbo-gateway.php:693
+msgid "Order marked as completed according to Karbo plugin settings"
+msgstr ""
+"Замовлення позначене як завершене згідно з налаштуваннями плагіну Карбо"
+
+#: krbwc-karbo-gateway.php:703
+msgid "Full payment received for order ID: "
+msgstr "Отримано повну оплату замовлення №: "
+
+#: krbwc-karbo-gateway.php:704
+msgid "Order ID: "
+msgstr "Замовлення №: "
+
+#: krbwc-karbo-gateway.php:704
+msgid "paid in full."
+msgstr "повністю оплачено."
+
+#: krbwc-karbo-gateway.php:704
+msgid "Received KRB: "
+msgstr "Отримано крб.: "
+
+#: krbwc-karbo-gateway.php:704
+msgid "Please process and complete order for customer. "
+msgstr "Будь-ласка обробіть і виконайте замовлення. "
+
+#: krbwc-render-settings.php:63
+msgid ""
+"Karbo Payment Gateway is NOT operational (try to re-enter and save "
+"settings): "
+msgstr ""
+"Шлюз Карбо Клуб не працює (спробуйте ще раз ввести дані і зберегти "
+"налаштування): "
+
+#: krbwc-render-settings.php:94
+msgid "Karbo Payment Gateway is operational"
+msgstr "Шлюз Карбо працює"
+
+#: krbwc-render-settings.php:95
+msgid "Pending amount: "
+msgstr "Очікується сума: "
+
+#: krbwc-render-settings.php:96
+msgid "Total received: "
+msgstr "Всього отримано: "
+
+#: krbwc-render-settings.php:143 krbwc-render-settings.php:254
+msgid "Save Changes"
+msgstr "Зберегти зміни"
+
+#: krbwc-render-settings.php:144 krbwc-render-settings.php:255
+msgid "Reset settings"
+msgstr "Скинути налаштування"
+
+#: krbwc-render-settings.php:152
+msgid "Karbo Service Provider:"
+msgstr "Провайдер послуг мережі Карбо:"
+
+#: krbwc-render-settings.php:155
+msgid "Karbo.Club Payment Gateway"
+msgstr "Платіжний шлюз Karbo.Club"
+
+#: krbwc-render-settings.php:158
+msgid ""
+"Please select your Karbo service provider and press [Save changes]. Then "
+"fill-in necessary details and press [Save changes] again."
+msgstr ""
+"Виберіть провайдера перевірки платежу і натисніть [Зберегти зміни]. Тоді "
+"заповніть потрібні поля і натисніть [Зберегти зміни] знову."
+
+#: krbwc-render-settings.php:164
+msgid "Wallet Address:"
+msgstr "Адреса гаманця:"
+
+#: krbwc-render-settings.php:168
+msgid ""
+"Register at <a href=\"https://karbo.club/\">Karbo Club FREE Gateway</a>, and "
+"paste in your wallet address. This plugin works only with addresses "
+"registered at Karbo.Club."
+msgstr ""
+"Зареєструйтесь на <a href=\"https://karbo.club/\">безкоштовному шлюзі Karbo "
+"Club</a> і вставте адресу вашого гаманця. Плагін працює тільки з адресами, "
+"отриманими на сервісі Karbo.Club."
+
+#: krbwc-render-settings.php:174
+msgid "Number of confirmations required before accepting payment:"
+msgstr "Кількість підтверджень для зарахування платежу:"
+
+#: krbwc-render-settings.php:178
+msgid ""
+"After a transaction is broadcast to the Karbo network, it may be included in "
+"a block that is published\n"
+"              to the network. When that happens it is said that one "
+"<b>confirmation</b> has occurred for the transaction.\n"
+"              With each subsequent block that is found, the number of "
+"confirmations is increased by one. To protect against double spending, a "
+"transaction should not be considered as confirmed until a certain number of "
+"blocks confirm, or verify that transaction.\n"
+"              6 is considered very safe number of confirmations, although it "
+"takes longer to confirm."
+msgstr ""
+"Після того як транзакція передається у мережу Карбо, вона потрапляє в блок, "
+"кортий публікується\n"
+"              в мережі. Коли це стається, транзакція отримує одне "
+"<b>підтвердження</b> мережі.\n"
+"              З кожним наступним блоком, число підтверджень збільшується на "
+"одне. Для захисту від подвійної витрати, транзакція не повинна вважатись "
+"підтвердженою доки певна кількість блоків не перевірить і не підтвердить цю "
+"транзакцію.\n"
+"              6 підтверджень вважається достатнім, хоча очікування на таку "
+"кількість підтверджень може зайняти трохи часу."
+
+#: krbwc-render-settings.php:187
+msgid "Payment expiration time (minutes):"
+msgstr "Час на виконання оплати (у хвилинах):"
+
+#: krbwc-render-settings.php:191
+msgid "Payment must get the required number of confirmations within this time."
+msgstr ""
+"Платіж має бути зроблений і отримати потрібну кількість підтверджень за цей "
+"проміжок."
+
+#: krbwc-render-settings.php:197
+msgid "Exchange rate multiplier:"
+msgstr "Множник обмінного курсу:"
+
+#: krbwc-render-settings.php:201
+msgid ""
+"Extra multiplier to apply to convert store default currency to Karbo price.\n"
+"              <br />Example: 1.05 - will add extra 5% to the total price in "
+"Karbos.\n"
+"              May be useful to compensate for market volatility or for "
+"merchant’s loss to fees when converting Karbos to local currency,\n"
+"              or to encourage customer to use Karbos for purchases (by "
+"setting multiplier to < 1.00 values)."
+msgstr ""
+"Додатковий множник при конвертації з валюти магазину по-замовчуванню у ціну "
+"в карбованцях.\n"
+"              <br />Наприклад: 1.05 - додасть додаткові 5% до ціни у "
+"карбованцях.\n"
+"              Може знадобитись для компенсації коливань обмінного курсу, або "
+"покриття комісій за обмін карбованців на гривні чи іншу валюту,\n"
+"              або для того щоб заохотити покупця використати карбованці для "
+"оплати (якщо встановити множник у значення < 1.00 вийде знижка)."
+
+#: krbwc-render-settings.php:210
+msgid "Auto-complete paid orders:"
+msgstr "Автоматично позначати завершеними оплачені замовлення: "
+
+#: krbwc-render-settings.php:213
+msgid ""
+"If checked - fully paid order will be marked as “completed” and “<i>Your "
+"order is complete</i>” email will be immediately delivered to customer."
+msgstr ""
+"Якщо зазначено - повністю оплачене замовлення буде позначене як “завершене”, "
+"а покупцю  буде негайно надісланий лист “<i>Ваше замовлення звершене</i>”."
+
+#: krbwc-render-settings.php:214
+msgid ""
+"If unchecked: store admin will need to mark order as completed manually - "
+"assuming extra time needed to ship physical product after payment is "
+"received."
+msgstr ""
+"Якщо ця опція вимкнена: адміністратор повинен вручну позначити замовлення як "
+"завершене - у випадку якщо потрібен додатковий час на підготовку доставки "
+"після отримання оплати."
+
+#: krbwc-render-settings.php:215
+msgid ""
+"Note: virtual/downloadable products will automatically complete upon "
+"receiving full payment (so this setting does not have effect in this case)."
+msgstr ""
+"Прим.: замовлення віртуальних товарів і товарів для завантаження будуть "
+"автоматично завершуватись після отримання оплати (тобто ці налаштування не "
+"мають на них впливу)."
+
+#: krbwc-render-settings.php:221
+msgid "Cron job type:"
+msgstr "Тип завдання Cron:"
+
+#: krbwc-render-settings.php:224
+msgid "Soft Cron (Wordpress-driven)"
+msgstr "Soft Cron (за допомогою Wordpress)"
+
+#: krbwc-render-settings.php:225
+msgid "Hard Cron (Cpanel-driven)"
+msgstr "Hard Cron (за допомогою Cpanel)"
+
+#: krbwc-render-settings.php:228
+msgid ""
+"Hard Cron job is enabled: make sure to follow instructions below to enable "
+"hard cron job at your hosting panel."
+msgstr ""
+"Hard Cron увімкнено: дотримуйтесь вказівок нижче, щоб задіяти Hard Cron у "
+"вашій панелі управління хостингом."
+
+#: krbwc-render-settings.php:229
+msgid ""
+"Cron job will take care of all regular Karbo payment processing tasks, like "
+"checking if payments are made and automatically completing the orders."
+msgstr ""
+"Завдання Cron буде регулярно виконувати всі дії по обробці платежів "
+"карбованцями, такі як перевірка оплати і автоматичне завершення замовлення."
+
+#: krbwc-render-settings.php:230
+msgid ""
+"<b>Soft Cron</b>: - Wordpress-driven (runs on behalf of a random site "
+"visitor)."
+msgstr ""
+"<b>Soft Cron</b>: - засобами Wordpress (виконується коли хтось відвідує ваш "
+"сайт)."
+
+#: krbwc-render-settings.php:232
+msgid ""
+"<b>Hard Cron</b>: - Cron job driven by the website hosting system/server "
+"(usually via CPanel)."
+msgstr ""
+"<b>Hard Cron</b>: - Завдання Cron виконується у панелі управління хостингу "
+"чи сервера (зазвичай у CPanel)."
+
+#: krbwc-render-settings.php:233
+msgid ""
+"When enabling Hard Cron job - make this script to run every 5 minutes at "
+"your hosting panel cron job scheduler:"
+msgstr ""
+"Коли ви вмикаєте завдання Hard Cron - налаштуйте запуск цього скрипта з "
+"інтервалом кожні 5 хв. у панелі управління хостингом:"
+
+#: krbwc-render-settings.php:235
+msgid ""
+"<b style=\"color:red;\">NOTE:</b> Cron jobs <b>might not work</b> if your "
+"site is password protected with HTTP Basic auth or other methods. This will "
+"result in WooCommerce store not seeing received payments (even though funds "
+"will arrive correctly to your Karbo addresses)."
+msgstr ""
+"<b style=\"color:red;\">УВАГА:</b> Завдання Cron <b>можуть не працювати</b> "
+"якщо ваш сайт захищений паролем за допомогою HTTP Basic auth або іншими "
+"методами. Через це магазин на базі WooCommerce може не бачити отриманих "
+"платежів (хоча кошти надійдуть на ваш гаманець у мережі Карбованець)."
+
+#: krbwc-render-settings.php:236
+msgid ""
+"<u>Note:</u> You will need to deactivate/reactivate plugin after changing "
+"this setting for it to have effect."
+msgstr ""
+"<u>Прим.:</u> Потрібно деактивувати/реактивувати плагін щоб зміна цього "
+"налаштування мала ефект."
+
+#: krbwc-render-settings.php:237
+msgid ""
+"\"Hard\" cron jobs may not be properly supported by all hosting plans (many "
+"shared hosting plans has restrictions in place)."
+msgstr ""
+"\"Hard\" завдання cron можуть не підтримуватись у вашому хостингу (багато "
+"тарифів shared hosting мають обмеження)."
+
+#: krbwc-render-settings.php:244
+msgid ""
+"Delete all plugin-specific settings, database tables and data on uninstall:"
+msgstr ""
+"Видалити усі налаштування що стосуються плагіна, таблиці й дані з бази даних "
+"при деінсталяції:"
+
+#: krbwc-render-settings.php:247
+msgid ""
+"If checked - all plugin-specific settings, database tables and data will be "
+"removed from Wordpress database upon plugin uninstall (but not upon "
+"deactivation or upgrade)."
+msgstr ""
+"Якщо зазначити - усі налаштування плагіна, записи і таблиці будуть видалені "
+"з бази даних Wordpress при деінсталяції цього плагіна (але не при "
+"деактивації чи оновленні)."
+
+#: krbwc-utils.php:190
+msgid ""
+"According to your settings (including multiplier), current calculated rate "
+"for 1 Karbo (in "
+msgstr ""
+"Відповідно до ваших налаштувань (включно з множником), поточний курс 1 крб. "
+"(в "
+
+#: krbwc-utils.php:190
+msgid "is "
+msgstr "становить "
+
+#: krbwc-utils.php:191
+msgid "WARNING: Cannot determine exchange rates (for "
+msgstr "УВАГА: Не вдалось отримати курси обміну (для "
+
+#: krbwc-utils.php:191 krbwc-utils.php:532
+msgid ""
+"Make sure your PHP settings are configured properly and your server can (is "
+"allowed to) connect to external WEB services via PHP."
+msgstr ""
+"Переконайтесь, що PHP налаштовано вірно і ваш сервер може підключатись до "
+"зовнішніх веб-сервісів через PHP."
+
+#: krbwc-utils.php:229 krbwc-utils.php:538
+msgid "The following PHP functions are disabled on your server: "
+msgstr "На вашому сервері відключені ці функції PHP: "
+
+#: krbwc-utils.php:500
+msgid ""
+"is invalid. Must be 95 characters long, consisting of digits and letters."
+msgstr "неправильна. Вона має складатись із 95 букв і цифр."
+
+#: krbwc-utils.php:532
+msgid "ERROR: Cannot determine exchange rates (for"
+msgstr "ПОМИЛКА: Не вдалось визначити курси обміну (для"
+
+#: krbwc-woocommerce.php:72
+msgid "Once every 30 seconds"
+msgstr "Раз на 30 секунд"
+
+#: krbwc-woocommerce.php:73
+msgid "Once every 1 minute"
+msgstr "Раз в хвилину"
+
+#: krbwc-woocommerce.php:74
+msgid "Once every 2.5 minutes"
+msgstr "Раз на 2.5 хв."
+
+#: krbwc-woocommerce.php:75
+msgid "Once every 5 minutes"
+msgstr "Кожні 5 хв."
+
+#: krbwc-woocommerce.php:119
+msgid "Woo Karbo Club"
+msgstr "Woo Карбо Клуб"
+
+#: krbwc-woocommerce.php:120
+msgid "Karbo Club"
+msgstr "Карбо Клуб"
+
+#: krbwc-woocommerce.php:129
+msgid "WooCommerce Karbo Club Gateway"
+msgstr "Шлюз Карбо Клуб для WooCommerce"
+
+#: krbwc-woocommerce.php:130
+msgid "General Settings"
+msgstr "Загальні налаштування"
+
+#~ msgid ""
+#~ "<p style=\"border:1px solid #890e4e;padding:5px 10px;color:#004400;"
+#~ "background-color:#FFF;\">Please donate KRB to:&nbsp;&nbsp;<span style="
+#~ "\"font-size:110%;font-weight:bold;\"><a href=\"karbowanec:"
+#~ "KdueH7qJgwWGwzUCNxiUnkG4ddayULf9PMAnGgEHyVeMbAfzYP4BPSJj455jtAiweTGW5U81HhJbuY34gXBCR2sB9YcE3h9\">KdueH7qJgwWGwzUCNxiUnkG4ddayULf9PMAnGgEHyVeMbAfzYP4BPSJj455jtAiweTGW5U81HhJbuY34gXBCR2sB9YcE3h9</"
+#~ "a></span> to support maintaining of the free Payment Gateway.</p>"
+#~ msgstr ""
+#~ "<p style=\"border:1px solid #890e4e;padding:5px 10px;color:#004400;"
+#~ "background-color:#FFF;\">Зробіть пожертву KRB на адресу:&nbsp;&nbsp;<span "
+#~ "style=\"font-size:110%;font-weight:bold;\"><a href=\"karbowanec:"
+#~ "KdueH7qJgwWGwzUCNxiUnkG4ddayULf9PMAnGgEHyVeMbAfzYP4BPSJj455jtAiweTGW5U81HhJbuY34gXBCR2sB9YcE3h9\">KdueH7qJgwWGwzUCNxiUnkG4ddayULf9PMAnGgEHyVeMbAfzYP4BPSJj455jtAiweTGW5U81HhJbuY34gXBCR2sB9YcE3h9</"
+#~ "a></span> для підтримки існування безкоштовного шлюзу.</p>"
+
+#~ msgid ""
+#~ "<span style=\"color:#222;\">According to your settings (including "
+#~ "multiplier), current calculated rate for 1 Karbo (in "
+#~ "{$currency_code})={{{EXCHANGE_RATE}}}</span>"
+#~ msgstr ""
+#~ "<span style=\"color:#222;\">Відповідно до налаштувань (включно з "
+#~ "множником), поточний курс 1 крб. (в {$currency_code}) = "
+#~ "{{{EXCHANGE_RATE}}}</span>"
+
+#~ msgid ""
+#~ "Your Karbo address where customer sends you payment for the product. It "
+#~ "must be in your walletd container."
+#~ msgstr "Адреса, на яку надходитиме оплата за товари."

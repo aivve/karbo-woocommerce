@@ -2,11 +2,11 @@
 /*
 
 Plugin Name: Karbo for WooCommerce
-Plugin URI: https://github.com/Karbovanets/karbo-woocommerce/
+Plugin URI: https://github.com/aivve/karbo.club-woocommerce
 Description: Karbo for WooCommerce plugin allows you to accept payments in Karbos for physical and digital products at your WooCommerce-powered online store.
 Version: 0.01
 Author: KittyCatTech
-Author URI: https://github.com/Karbovanets/karbo-woocommerce/
+Author URI: https://github.com/aivve/karbo.club-woocommerce
 License: BipCot NoGov Software License bipcot.org
 
 */
@@ -116,18 +116,18 @@ function KRBWC_create_menu()
     // create new top-level menu
     // http://www.fileformat.info/info/unicode/char/e3f/index.htm
     add_menu_page (
-        __('Woo Karbo', KRBWC_I18N_DOMAIN),                    // Page title
-        __('Karbo', KRBWC_I18N_DOMAIN),                        // Menu Title - lower corner of admin menu
+        __('Woo Karbo Club', 'wookarboclub'),                    // Page title
+        __('Karbo Club', 'wookarboclub'),                        // Menu Title - lower corner of admin menu
         'administrator',                                        // Capability
         'krbwc-settings',                                        // Handle - First submenu's handle must be equal to parent's handle to avoid duplicate menu entry.
         'KRBWC__render_general_settings_page',                   // Function
-        plugins_url('/images/karbo_16x.png', __FILE__)      // Icon URL
+        plugins_url('/images/krb.svg', __FILE__)      // Icon URL
         );
 
     add_submenu_page (
         'krbwc-settings',                                        // Parent
-        __("WooCommerce Karbo Gateway", KRBWC_I18N_DOMAIN),                   // Page title
-        __("General Settings", KRBWC_I18N_DOMAIN),               // Menu Title
+        __("WooCommerce Karbo Club Gateway", 'wookarboclub'),                   // Page title
+        __("General Settings", 'wookarboclub'),               // Menu Title
         'administrator',                                        // Capability
         'krbwc-settings',                                        // Handle - First submenu's handle must be equal to parent's handle to avoid duplicate menu entry.
         'KRBWC__render_general_settings_page'                    // Function
